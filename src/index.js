@@ -127,8 +127,13 @@ export default class ReactNativeCss {
           if (utils.arrayContains(property, unsupported)) continue;
 
           if (utils.arrayContains(property, numberize)) {
-            var value = value.replace(/px|\s*/g, '');
-            styles[toCamelCase(property)] = parseFloat(value);
+            var reg = /^('|")JS\((.*)\)\1$/;
+            if(reg.test(value)){
+              styles[toCamelCase(property)] = value.match(reg)[2]
+            } else {
+              var value = value.replace(/px|\s*/g, '');
+              styles[toCamelCase(property)] = parseFloat(value);
+            }
           }
 
           else if (utils.arrayContains(property, changeArr)) {
