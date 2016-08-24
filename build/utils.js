@@ -45,7 +45,14 @@ var Utils = (function () {
       var indentation = prettyPrint ? 4 : 0;
       var jsonOutput = JSON.stringify(style, null, indentation);
       var output = "module.exports = ";
-      output += literalObject ? "" + jsonOutput : "require('react-native').StyleSheet.create(" + jsonOutput + ");";
+      output += literalObject ? "" + jsonOutput : "import React, {StyleSheet, Dimensions, PixelRatio} from \"react-native\";";
+      output +="const {width, height, scale} = Dimensions.get("window"),";
+      output +="vw = width / 100,
+      output +="vh = height / 100,
+      output +="vmin = Math.min(vw, vh),
+      output +="vmax = Math.max(vw, vh);
+
+      output +="export default " + jsonOutput + ";";
       // Write to file
       _fs2["default"].writeFileSync(outputFile, output);
       return output;
