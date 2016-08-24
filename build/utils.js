@@ -47,10 +47,10 @@ var Utils = (function () {
       var output = "module.exports = ";
       output += literalObject ? "" + jsonOutput : "import React, {StyleSheet, Dimensions, PixelRatio} from \"react-native\";";
       output +="const {width, height, scale} = Dimensions.get("window"),";
-      output +="vw = width / 100,
-      output +="vh = height / 100,
-      output +="vmin = Math.min(vw, vh),
-      output +="vmax = Math.max(vw, vh);
+      output +="vw = width / 100,";
+      output +="vh = height / 100,";
+      output +="vmin = Math.min(vw, vh),";
+      output +="vmax = Math.max(vw, vh);";
 
       output +="export default " + jsonOutput + ";";
       // Write to file
