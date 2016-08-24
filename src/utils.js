@@ -22,8 +22,16 @@ export default class Utils {
   static outputReactFriendlyStyle(style, outputFile, prettyPrint, literalObject) {
     var indentation = prettyPrint ? 4 : 0;
     var jsonOutput = JSON.stringify(style, null, indentation);
-    var output = "module.exports = ";
-    output += (literalObject) ? `${jsonOutput}` : `require('react-native').StyleSheet.create(${jsonOutput});`;
+    var output = "";
+    output += (literalObject) ? `${jsonOutput}` : `
+    import React, {StyleSheet, Dimensions, PixelRatio} from "react-native";
+    const {width, height, scale} = Dimensions.get("window"),
+    vw = width / 100,
+    vh = height / 100,
+    vmin = Math.min(vw, vh),
+    vmax = Math.max(vw, vh);
+
+    export default StyleSheet.create(${jsonOutput});`;
     // Write to file
     fs.writeFileSync(outputFile, output);
     return output;
