@@ -179,10 +179,13 @@ var ReactNativeCss = (function () {
                   if (_utilsJs2['default'].arrayContains(property, unsupported)) return 'continue';
 
                   if (_utilsJs2['default'].arrayContains(property, numberize)) {
-                    if(!/^JS\(.*\)$/.test(value)){
-                      value = value.replace(/px|\s*/g, '');
+                    var reg = /^('|")JS\((.*)\)\1$/;
+                    if(reg.test(value)){
+                      styles[toCamelCase(property)] = value.match(reg)[2]
+                    } else {
+                      var value = value.replace(/px|\s*/g, '');
+                      styles[toCamelCase(property)] = parseFloat(value);
                     }
-                    styles[(0, _toCamelCase2['default'])(property)] = parseFloat(value);
                   } else if (_utilsJs2['default'].arrayContains(property, changeArr)) {
                     baseDeclaration = {
                       type: 'description'
