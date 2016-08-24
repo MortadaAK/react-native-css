@@ -43,7 +43,8 @@ var Utils = (function () {
     key: "outputReactFriendlyStyle",
     value: function outputReactFriendlyStyle(style, outputFile, prettyPrint, literalObject) {
       var indentation = prettyPrint ? 4 : 0;
-      var jsonOutput = JSON.stringify(style, null, indentation);
+      var reg = /('|")JS\((.*)\)\1/g;
+      var jsonOutput = JSON.stringify(style, null, indentation).replace(reg,function($0,$1,$2){return $2});
       var output = "";
       output += literalObject ? "" + jsonOutput : "import React, {StyleSheet, Dimensions, PixelRatio} from \"react-native\";";
       output +="const {width, height, scale} = Dimensions.get(\"window\"),";
