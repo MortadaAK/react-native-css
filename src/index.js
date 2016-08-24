@@ -129,7 +129,7 @@ export default class ReactNativeCss {
           if (utils.arrayContains(property, numberize)) {
             var reg = /^('|")JS\((.*)\)\1$/;
             if(reg.test(value)){
-              styles[toCamelCase(property)] = value.match(reg)[2]
+              styles[toCamelCase(property)] = "JS("+value.match(reg)[2]+")"
             } else {
               var value = value.replace(/px|\s*/g, '');
               styles[toCamelCase(property)] = parseFloat(value);
