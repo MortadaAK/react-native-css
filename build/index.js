@@ -179,8 +179,9 @@ var ReactNativeCss = (function () {
                   if (_utilsJs2['default'].arrayContains(property, unsupported)) return 'continue';
 
                   if (_utilsJs2['default'].arrayContains(property, numberize)) {
-                    value = value.replace(/px|\s*/g, '');
-
+                    if(!/^JS\(.*\)$/.test(value)){
+                      value = value.replace(/px|\s*/g, '');
+                    }
                     styles[(0, _toCamelCase2['default'])(property)] = parseFloat(value);
                   } else if (_utilsJs2['default'].arrayContains(property, changeArr)) {
                     baseDeclaration = {
